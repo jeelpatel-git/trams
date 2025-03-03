@@ -1,0 +1,26 @@
+<div class="tram-container">
+  <h2> <fa-icon [icon]="faTrainTram" class="tram-icon"></fa-icon> Trams from Luma</h2>
+
+  <div class="dropdown-container">
+    <label for="destination">Select Destination:</label>
+    <select id="destination" [(ngModel)]="selectedDestination" (change)="filterTrams()">
+      <option value="">All Destinations</option>
+      <option *ngFor="let stopArea of stopAreas" [value]="stopArea.name">
+        {{ stopArea.name }}
+      </option>
+    </select>
+  </div>
+
+  <ul *ngIf="filteredTrams.length; else noTrams" class="tram-list">
+    <li *ngFor="let tram of filteredTrams" class="tram-item">
+      <div class="tram-details">
+        <span class="tram-destination">{{ tram.destination }}</span>
+        <span class="tram-time"><fa-icon [icon]="faClock" class="clock-icon"></fa-icon> Scheduled: {{ tram.scheduled | date: "dd-MM-yyyy HH:mm:ss" }}</span>
+      </div>
+    </li>
+  </ul>
+
+  <ng-template #noTrams>
+    <p class="no-trams"> No trams available from Luma to {{ selectedDestination }} at the moment.</p>
+  </ng-template>
+</div>
